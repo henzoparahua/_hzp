@@ -6,6 +6,15 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
+.slate-editor {
+  border: none !important; /* Remove border */
+  outline: none !important; /* Remove outline */
+}
+
+.slate-editor:focus {
+  outline: none !important; /* Remove focus outline */
+}
+
 .plainElement {
   border-top: thin solid rgba(100, 100, 100, 0.9);
   border-bottom: thin solid rgba(100, 100, 100, 0.9);
