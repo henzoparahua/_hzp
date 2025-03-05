@@ -1,6 +1,7 @@
 import { cn } from "@/lib/utils";
 import { RenderElementProps, useSelected } from "slate-react";
 import { CustomElement } from "./RenderElements";
+import React from "react";
 
 export const PlainElement = (
   props: RenderElementProps & { element: CustomElement }
@@ -28,10 +29,9 @@ export const TerminalElement = (
   props: RenderElementProps & { element: CustomElement }
 ) => {
   const { element } = props;
-
   return (
-    <div {...props.attributes}>
-      {element.domain ? `Domain: ${element.domain}` : props.children}
+    <div {...props.attributes} onKeyDown={() => console.log("hehe")}>
+      <p>{element.domain ? `Domain: ${element.domain}` : props.children}</p>
     </div>
   );
 };

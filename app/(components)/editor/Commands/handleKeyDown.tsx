@@ -33,32 +33,24 @@ export const onKeyDown = (event: React.KeyboardEvent, editor: Editor) => {
         case "Enter": {
           event.preventDefault();
 
-          // Capture the text from the "prompt" node
           const promptText = Editor.string(editor, path);
 
-          // Extract the domain value (e.g., from a format like "/command domain:example.com")
           const domainMatch = promptText.match(/domain:([^\s]+)/);
           const domain = domainMatch ? domainMatch[1] : undefined;
 
-          // Insert a new "terminal" node below the "prompt" node
           Transforms.insertNodes(
             editor,
             {
-              type: "terminal",
-              domain, // Pass the domain value
+              type: "plainElement",
               children: [
                 { text: domain ? `Domain: ${domain}` : "No domain specified" },
               ],
             },
-            { at: [path[0] + 1] } // Insert after the current node
+            { at: [path[0] + 1] }
           );
-
-          // Clear the "prompt" node
           Transforms.delete(editor, { at: path });
-
           break;
         }
-
         default:
           break;
       }
