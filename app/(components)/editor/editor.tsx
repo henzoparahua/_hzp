@@ -2,12 +2,12 @@
 import React, { useCallback, useState } from "react";
 import { createEditor, Editor, Range } from "slate";
 import { Editable, Slate, withReact } from "slate-react";
-import { CustomElement, renderElement } from "./Elements/RenderElements";
+import { CustomElement, Element } from "./Elements/RenderElements";
 import { onKeyDown } from "./Commands/handleKeyDown";
 
 const initialValue: CustomElement[] = [
   {
-    type: "plainElement",
+    type: "plain",
     children: [{ text: "" }],
   },
 ];
@@ -16,10 +16,10 @@ const App = () => {
   const [editor] = useState(() => withReact(createEditor()));
   const [value, setValue] = useState(initialValue);
 
-  const renderElementCall = useCallback(renderElement, []);
+  const renderElementCall = useCallback(Element, []);
 
   const onKeyDownCall = useCallback(
-    (event: React.KeyboardEvent) => onKeyDown(event, editor),
+    (event: React.KeyboardEvent) => onKeyDown(event, editor, setValue),
     [editor]
   );
 
@@ -36,23 +36,7 @@ const App = () => {
             onKeyDown={onKeyDownCall}
             autoFocus
             className="h-full w-full space-y-3 md:p-8 slate-editor"
-            decorate={([node, path]) => {
-              if (editor.selection != null) {
-                !Editor.isEditor(node) &&
-                  Editor.string(editor, [path[0]]) === "" &&
-                  Range.includes(editor.selection, path) &&
-                  Range.isCollapsed(editor.selection);
-                {
-                  return [
-                    {
-                      ...editor.selection,
-                      placeholder: true,
-                    },
-                  ];
-                }
-              }
-              return [];
-            }}
+            placeholder="Type somethig below"
           />
         </Slate>
       </article>

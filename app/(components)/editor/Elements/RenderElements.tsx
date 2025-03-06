@@ -4,8 +4,7 @@ import { JSX } from "react";
 
 // Custom Element Types:
 export type CustomElement = {
-  type: "" | "command" | "code" | "prompt" | "plainElement";
-  domain?: CustomText[];
+  type: "" | "command" | "code" | "terminal" | "plain";
   children: CustomText[];
 };
 
@@ -13,15 +12,15 @@ export type CustomText = {
   text: string;
 };
 
-export const renderElement = (
+export const Element = (
   props: RenderElementProps & { element: CustomElement }
 ): JSX.Element => {
   switch (props.element.type) {
-    case "prompt":
+    case "terminal":
       return <TerminalElement {...props} />;
     case "code":
       return <CodeElement {...props} />;
-    case "plainElement":
+    case "plain":
       return <PlainElement {...props} />;
     default:
       return <PlainElement {...props} />;

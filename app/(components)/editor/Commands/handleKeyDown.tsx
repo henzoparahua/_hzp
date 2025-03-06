@@ -1,7 +1,11 @@
-import React from "react";
-import { Editor, Element, Range, Transforms } from "slate";
+import React, { useState } from "react";
+import { Editor, EditorMarks, Element, Range, Transforms } from "slate";
 
-export const onKeyDown = (event: React.KeyboardEvent, editor: Editor) => {
+export const onKeyDown = (
+  event: React.KeyboardEvent,
+  editor: Editor,
+  setValue: any
+) => {
   const { selection } = editor;
   if (selection && Range.isCollapsed(selection)) {
     const [start] = Range.edges(selection);
@@ -11,49 +15,19 @@ export const onKeyDown = (event: React.KeyboardEvent, editor: Editor) => {
 
     if (beforeText?.startsWith("/")) {
       const [match] = Editor.nodes(editor, {
-        match: (n) => n.type === "prompt",
+        match: (n: any) => n.type === "terminal",
       });
 
       Transforms.setNodes(
         editor,
-        { type: "prompt", children: [{ text: "" }] },
+        { type: "terminal", children: [{ text: "" }] },
         { match: (n) => Element.isElement(n) && Editor.isBlock(editor, n) }
       );
     }
 
     // Check if the current node is a "prompt" node
     const [match] = Editor.nodes(editor, {
-      match: (n) => n.type === "prompt",
+      match: (n: any) => n.type === "terminal",
     });
-
-    if (match) {
-      const [node, path] = match;
-
-      switch (event.key) {
-        case "Enter": {
-          event.preventDefault();
-
-          const promptText = Editor.string(editor, path);
-
-          const domainMatch = promptText.match(/domain:([^\s]+)/);
-          const domain = domainMatch ? domainMatch[1] : undefined;
-
-          Transforms.insertNodes(
-            editor,
-            {
-              type: "plainElement",
-              children: [
-                { text: domain ? `Domain: ${domain}` : "No domain specified" },
-              ],
-            },
-            { at: [path[0] + 1] }
-          );
-          Transforms.delete(editor, { at: path });
-          break;
-        }
-        default:
-          break;
-      }
-    }
   }
 };

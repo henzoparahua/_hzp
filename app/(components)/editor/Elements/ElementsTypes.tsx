@@ -1,7 +1,7 @@
 import { cn } from "@/lib/utils";
 import { RenderElementProps, useSelected } from "slate-react";
 import { CustomElement } from "./RenderElements";
-import React from "react";
+import React, { useState } from "react";
 
 export const PlainElement = (
   props: RenderElementProps & { element: CustomElement }
@@ -28,10 +28,21 @@ export const CodeElement = (
 export const TerminalElement = (
   props: RenderElementProps & { element: CustomElement }
 ) => {
-  const { element } = props;
+  const [terminalAction, setTerminalAction] = useState("");
+  console.log(terminalAction);
   return (
-    <div {...props.attributes} onKeyDown={() => console.log("hehe")}>
-      <p>{element.domain ? `Domain: ${element.domain}` : props.children}</p>
+    <div {...props.attributes} contentEditable={false}>
+      <p className="terminalElement font-mono font-medium">
+        {props.children}
+        <input
+          type="text"
+          className="bg-red-500"
+          value={terminalAction}
+          onChange={(e) => {
+            setTerminalAction(e.target.value);
+          }}
+        />
+      </p>
     </div>
   );
 };
