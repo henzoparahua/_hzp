@@ -1,4 +1,4 @@
-import { cn } from "@/lib/utils";
+import { cn, getTerminalValue, setTerminalValue } from "@/lib/utils";
 import { RenderElementProps, useSelected } from "slate-react";
 import { CustomElement } from "./RenderElements";
 import React, { useState } from "react";
@@ -29,7 +29,8 @@ export const TerminalElement = (
   props: RenderElementProps & { element: CustomElement }
 ) => {
   const [terminalAction, setTerminalAction] = useState("");
-  console.log(terminalAction);
+  setTerminalValue(terminalAction);
+  console.log(getTerminalValue());
   return (
     <div {...props.attributes} contentEditable={false}>
       <p className="terminalElement font-mono font-medium">

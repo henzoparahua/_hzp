@@ -13,3 +13,13 @@ const getCursorPosition = () => {
 };
 
 export default getCursorPosition;
+
+let terminalAction = "";
+
+export function getTerminalValue() {
+  return terminalAction;
+}
+export function setTerminalValue(newValue: string) {
+  terminalAction = newValue;
+  return;
+}
