@@ -1,36 +1,42 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+## So, what is the deal?
 
-## Getting Started
+Riven is a versatile editor designed to help users focus and organize their data efficiently. Built with focus on Node.js, Slate.js, and Convex, it serves as a general-resolver for storing and managing. Just like the real Ahamkara, Riven empowers users to shape their destiny by their wish, whenever you’re organizing thoughts.
 
-First, run the development server:
+## Cool, but how it works?
+
+You will need to figure out some things about Slate.js, but the core of Riven is pretty straightforward. It calls Oryx for queries (not very accurate, I know) and stores data written either by Oryx or the user themselves. Riven is an application built to provide a clean interface and be effective for those who use it. Oryx, on the other hand, is an old, creepy guy built as a PHP API, designed to fulfill dark necessities. It’s as simple as that.
+
+## How to run this?
+
+- At first, you will just need the following:
+  - Convex Server — It can be local or not.
+  - Node.js
+
+1. The first step will be simply write: `npm run dev`
+2. Create a `.env` file which will hold your `NEXT_PUBLIC_CONVEX_URL` and then run `npx convex dev`
+
+And thats all :p
+
+## File Structure
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+.
+├── app
+│   ├── (components)
+│   │   ├── editor
+│   │   │   ├── editor.tsx
+│   │   │   └── Commands
+│   │   │       └── handleKeyDown.tsx
+│   │   └── Elements
+│   │       ├── ElementsTypes.tsx
+│   │       └── RenderElements.tsx
+│   ├── ConvexClientProvider.tsx
+│   ├── globals.css
+│   ├── layout.tsx
+│   └── page.tsx
+├── convex
+│   ├── _generated
+│   └── nslookup.ts
+└── lib
+└── utils.ts
 ```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
