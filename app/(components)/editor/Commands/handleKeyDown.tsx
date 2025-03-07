@@ -1,11 +1,8 @@
-import React, { useState } from "react";
-import { Editor, EditorMarks, Element, Range, Transforms } from "slate";
+import { getTerminalValue, setTerminalValue } from "@/lib/utils";
+import React from "react";
+import { Editor, Element, Range, Transforms } from "slate";
 
-export const onKeyDown = (
-  event: React.KeyboardEvent,
-  editor: Editor,
-  setValue: any
-) => {
+export const onKeyDown = (event: React.KeyboardEvent, editor: Editor) => {
   const { selection } = editor;
   if (selection && Range.isCollapsed(selection)) {
     const [start] = Range.edges(selection);
@@ -14,20 +11,26 @@ export const onKeyDown = (
     const beforeText = beforeRange && Editor.string(editor, beforeRange);
 
     if (beforeText?.startsWith("/")) {
+      console.log(`Dentro de /: ${beforeText}`);
       const [match] = Editor.nodes(editor, {
         match: (n: any) => n.type === "terminal",
       });
-
-      Transforms.setNodes(
-        editor,
-        { type: "terminal", children: [{ text: "" }] },
-        { match: (n) => Element.isElement(n) && Editor.isBlock(editor, n) }
-      );
+      if (!match) {
+        console.log(`não é um terminal mas agora vai virar`);
+        Transforms.setNodes(
+          editor,
+          { type: "terminal", children: [{ text: "" }] },
+          { match: (n) => Element.isElement(n) && Editor.isBlock(editor, n) }
+        );
+      }
     }
-
-    // Check if the current node is a "prompt" node
-    const [match] = Editor.nodes(editor, {
-      match: (n: any) => n.type === "terminal",
-    });
+  }
+  if (event.key === "Enter") {
+    event.preventDefault();
+    Transforms.insertNodes(
+      editor,
+      { type: "plain", children: [{ text: "" }] },
+      { match: (n) => Element.isElement(n) && Editor.isBlock(editor, n) }
+    );
   }
 };

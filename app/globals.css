@@ -19,12 +19,6 @@ body {
   border-top: thin solid rgba(100, 100, 100, 0.9);
   border-bottom: thin solid rgba(100, 100, 100, 0.9);
 }
-.terminalElement {
-  background-color: rgb(194, 194, 194);
-  padding: 4px;
-  border: thin solid rgba(100, 100, 100, 0.9);
-  border-radius: 8px;
-}
 .codeElement {
   padding-left: 6px;
   padding-top: 3px;

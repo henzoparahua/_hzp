@@ -2,6 +2,7 @@ import { cn, getTerminalValue, setTerminalValue } from "@/lib/utils";
 import { RenderElementProps, useSelected } from "slate-react";
 import { CustomElement } from "./RenderElements";
 import React, { useState } from "react";
+import { Text } from "slate";
 
 export const PlainElement = (
   props: RenderElementProps & { element: CustomElement }
@@ -29,21 +30,10 @@ export const TerminalElement = (
   props: RenderElementProps & { element: CustomElement }
 ) => {
   const [terminalAction, setTerminalAction] = useState("");
-  setTerminalValue(terminalAction);
-  console.log(getTerminalValue());
+
   return (
-    <div {...props.attributes} contentEditable={false}>
-      <p className="terminalElement font-mono font-medium">
-        {props.children}
-        <input
-          type="text"
-          className="bg-red-500"
-          value={terminalAction}
-          onChange={(e) => {
-            setTerminalAction(e.target.value);
-          }}
-        />
-      </p>
+    <div {...props.attributes}>
+      <p className="terminalElement text-md bg-gray-500">{props.children}</p>
     </div>
   );
 };

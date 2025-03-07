@@ -19,7 +19,7 @@ const App = () => {
   const renderElementCall = useCallback(Element, []);
 
   const onKeyDownCall = useCallback(
-    (event: React.KeyboardEvent) => onKeyDown(event, editor, setValue),
+    (event: React.KeyboardEvent) => onKeyDown(event, editor),
     [editor]
   );
 

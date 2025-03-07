@@ -19,7 +19,7 @@ let terminalAction = "";
 export function getTerminalValue() {
   return terminalAction;
 }
-export function setTerminalValue(newValue: string) {
+export function setTerminalValue(newValue) {
   terminalAction = newValue;
   return;
 }
