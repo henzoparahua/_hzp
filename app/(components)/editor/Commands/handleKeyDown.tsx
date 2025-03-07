@@ -7,7 +7,6 @@ export const onKeyDown = (event: React.KeyboardEvent, editor: Editor) => {
   const [match] = Editor.nodes(editor, {
     match: (n: any) => n.type === "terminal",
   });
-  console.log(match);
   if (selection && Range.isCollapsed(selection)) {
     const [start] = Range.edges(selection);
     const wordBefore = Editor.before(editor, start, { unit: "word" });
@@ -31,6 +30,7 @@ export const onKeyDown = (event: React.KeyboardEvent, editor: Editor) => {
       event.preventDefault();
       switch (beforeText) {
         case "code": {
+          console.log("booa codigo");
           Transforms.removeNodes(editor, { at: beforeRange });
           Transforms.insertNodes(
             editor,
@@ -40,6 +40,7 @@ export const onKeyDown = (event: React.KeyboardEvent, editor: Editor) => {
           break;
         }
         default: {
+          console.log("ai num vai da ne burrao");
           Transforms.setNodes(
             editor,
             { type: "plain", children: [{ text: "" }] },
