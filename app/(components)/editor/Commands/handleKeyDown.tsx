@@ -21,7 +21,7 @@ export const onKeyDown = (event: React.KeyboardEvent, editor: Editor) => {
       if (!match) {
         Transforms.setNodes(
           editor,
-          { type: "terminal", children: [{ text: "" }] },
+          { type: "terminal", children: [{ text: beforeText }] },
           { match: (n) => Element.isElement(n) && Editor.isBlock(editor, n) }
         );
       }
@@ -29,6 +29,7 @@ export const onKeyDown = (event: React.KeyboardEvent, editor: Editor) => {
     if (event.key === "Enter" && match && beforeText?.startsWith("code")) {
       event.preventDefault();
       console.log("hehe");
+      Transforms.removeNodes(editor, { at: beforeRange });
       Transforms.insertNodes(
         editor,
         { type: "code", children: [{ text: "" }] },
