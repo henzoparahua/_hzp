@@ -33,7 +33,11 @@ export const TerminalElement = (
 
   return (
     <div {...props.attributes}>
-      <p className="terminalElement text-md bg-gray-500">{props.children}</p>
+      <p className="">
+        <span className="bg-neutral-400 p-1 text-base terminalElement">
+          {props.children}
+        </span>
+      </p>
     </div>
   );
 };

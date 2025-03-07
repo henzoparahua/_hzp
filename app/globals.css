@@ -14,7 +14,9 @@ body {
 .slate-editor:focus {
   outline: none !important; /* Remove focus outline */
 }
-
+.terminalElement {
+  border-radius: 6px;
+}
 .plainElement {
   border-top: thin solid rgba(100, 100, 100, 0.9);
   border-bottom: thin solid rgba(100, 100, 100, 0.9);

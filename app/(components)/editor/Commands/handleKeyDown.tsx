@@ -7,6 +7,7 @@ export const onKeyDown = (event: React.KeyboardEvent, editor: Editor) => {
   const [match] = Editor.nodes(editor, {
     match: (n: any) => n.type === "terminal",
   });
+  console.log(match);
   if (selection && Range.isCollapsed(selection)) {
     const [start] = Range.edges(selection);
     const wordBefore = Editor.before(editor, start, { unit: "word" });
@@ -21,20 +22,32 @@ export const onKeyDown = (event: React.KeyboardEvent, editor: Editor) => {
       if (!match) {
         Transforms.setNodes(
           editor,
-          { type: "terminal", children: [{ text: beforeText }] },
+          { type: "terminal", children: [{ text: "" }] },
           { match: (n) => Element.isElement(n) && Editor.isBlock(editor, n) }
         );
       }
     }
-    if (event.key === "Enter" && match && beforeText?.startsWith("code")) {
+    if (event.key === "Enter" && match) {
       event.preventDefault();
-      console.log("hehe");
-      Transforms.removeNodes(editor, { at: beforeRange });
-      Transforms.insertNodes(
-        editor,
-        { type: "code", children: [{ text: "" }] },
-        { match: (n) => Element.isElement(n) && Editor.isBlock(editor, n) }
-      );
+      switch (beforeText) {
+        case "code": {
+          Transforms.removeNodes(editor, { at: beforeRange });
+          Transforms.insertNodes(
+            editor,
+            { type: "code", children: [{ text: "" }] },
+            { match: (n) => Element.isElement(n) && Editor.isBlock(editor, n) }
+          );
+          break;
+        }
+        default: {
+          Transforms.setNodes(
+            editor,
+            { type: "plain", children: [{ text: "" }] },
+            { match: (n) => Element.isElement(n) && Editor.isBlock(editor, n) }
+          );
+          break;
+        }
+      }
     }
   }
   if (event.key === "Enter" && !match) {
